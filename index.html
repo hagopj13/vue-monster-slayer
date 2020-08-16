@@ -47,18 +47,23 @@
             <button id="give-up" @click="giveUp">GIVE UP</button>
         </div>
     </section>
-    <section class="row log" v-if="turns.length > 0">
-        <div class="small-12 columns">
-            <ul>
-                <li 
-                  v-for="turn in turns" 
-                  :class="{'player-turn': turn.isPlayer, 'monster-turn': !turn.isPlayer}"
-                >
-                  {{ turn.text }}
-                </li>
-            </ul>
-        </div>
-    </section>
+    <transition name="fade">
+      <section class="row log" v-if="turns.length > 0">
+          <div class="small-12 columns">
+              <ul>
+                <transition-group name="fade">
+                  <li 
+                    v-for="turn in turns" 
+                    :class="{'player-turn': turn.isPlayer, 'monster-turn': !turn.isPlayer}"
+                    :key="turn.id"
+                  >
+                    {{ turn.text }}
+                  </li>
+                </transition-group>
+              </ul>
+          </div>
+      </section>
+    </transition>
 </div>
 <script src="app.js"></script>
 </body>

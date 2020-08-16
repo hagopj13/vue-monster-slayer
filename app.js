@@ -5,6 +5,7 @@ new Vue({
     monsterHealth: 100,
     isGameRunning: false,
     turns: [],
+    currentTurn: 0,
   },
   methods: {
     startGame() {
@@ -12,6 +13,7 @@ new Vue({
       this.playerHealth = 100;
       this.monsterHealth = 100;
       this.turns = [];
+      this.currentTurn = 0;
     },
     attack() {
       const damage = this.calculateDamage(3, 10);
@@ -19,7 +21,9 @@ new Vue({
       this.turns.unshift({ 
         isPlayer: true, 
         text: `Player hits Monster by ${damage}`,
+        id: this.currentTurn + 1,
       });
+      this.currentTurn++;
       if(this.checkWin()) {
         return;
       }
@@ -31,7 +35,9 @@ new Vue({
       this.turns.unshift({ 
         isPlayer: true, 
         text: `Player hits Monster hard by ${damage}`,
+        id: this.currentTurn + 1,
       });
+      this.currentTurn++;
       if(this.checkWin()) {
         return;
       }
@@ -46,7 +52,9 @@ new Vue({
       this.turns.unshift({ 
         isPlayer: true, 
         text: 'Player heals itself by 10',
+        id: this.currentTurn + 1,
       });
+      this.currentTurn++;
       this.monsterAttacks();
     },
     giveUp() {
@@ -54,6 +62,7 @@ new Vue({
       this.turns.unshift({ 
         isPlayer: true, 
         text: 'Player gave up',
+        id: this.currentTurn + 1,
       });
     },
     monsterAttacks() {
@@ -62,7 +71,9 @@ new Vue({
       this.turns.unshift({ 
         isPlayer: false, 
         text: `Monster hits Player by ${damage}`,
+        id: this.currentTurn + 1,
       });
+      this.currentTurn++;      
       this.checkWin();
     },
     calculateDamage(min, max) {
@@ -87,4 +98,4 @@ new Vue({
       return false;
     },
   },
-})
+});
